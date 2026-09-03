@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- スマホの画面サイズにぴったり合わせる設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>エンジニア専用タロット</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: transform 0.1s;
+    }
+    button:active {
+      transform: scale(0.95);
+    }
+    .results {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .card-box {
+      background-color: #1e1e1e;
+      border-left: 5px solid #4CAF50;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: left;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .label {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .card-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>エンジニア専用タロット</h1>
+  <button onclick="drawCards()">診断実行 (Run)</button>
+
+  <div class="results" id="results">
+    <!-- ここに結果が出力されます -->
+  </div>
+
+  <script>
+    // カヨちゃんチューニング版データセット（全正位置）
+    const cards = [
+      "0.愚者（新規・ギャンブル）",
+      "1.魔術師（実験・テクニック）",
+      "2.女教皇（アイデア・分析）",
+      "3.女帝（製造・作成）",
+      "4.皇帝（経営・計画）",
+      "5.教皇（従来型・権威）",
+      "6.恋人（好き・合意）",
+      "7.戦車（行動・進歩）",
+      "8.力（感情コントロール・あきらめない）",
+      "9.隠者（塾考・機密）",
+      "10.運命の輪（棚ぼた・チャンス）",
+      "11.正義（妥当・公正）",
+      "12.吊るされた男（我慢・継続）",
+      "13.死神（締め切り・破棄して再考）",
+      "14.節制（妥協・バランス）",
+      "15.悪魔（ハマる・拘り）",
+      "16.塔（ショック・サプライズ）",
+      "17.星（一部希望・期待）",
+      "18.月（年月・時間が解決する）",
+      "19.太陽（成功・狙いどおり）",
+      "20.審判（復活・決断）",
+      "21.世界（一応完成・提出）"
+    ];
+
+    function drawCards() {
+      // 配列のコピーを作成
+      let deck = [...cards];
+      
+      // フィッシャー–イェーツ・シャッフル（重複なし処理）
+      for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+      }
+
+      // 上から3枚取得
+      const current = deck[0];
+      const issue = deck[1];
+      const result = deck[2];
+
+      // HTMLに出力
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = `
+        <div class="card-box">
+          <div class="label">【現状】</div>
+          <div class="card-name">${current}</div>
+        </div>
+        <div class="card-box">
+          <div class="label">【課題】</div>
+          <div class="card-name">${issue}</div>
+        </div>
+        <div class="card-box">
+          <div class="label">【結果】</div>
+          <div class="card-name">${result}</div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
